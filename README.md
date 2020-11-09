@@ -1,3 +1,72 @@
+
+
+Make it work on windows
+
+## How to build
+
+### Build WarpCTC
+
+- ensure you have installed required components
+
+  - vs 2017 / vs 2019
+  - cuda
+  - python 38 and all required python dependencies
+
+- open `x64 Native Tools Command Prompt for VS 2019` command prompt
+
+- navigate to the root folder of `warp-ctc`, simply run
+
+  ```shell
+  build-win.cmd
+  ```
+
+- if everything is  OK, you'll get the the `warpctc.dll` in the `build` folder
+
+### Install PyTorch bindings
+
+> Assume you're using conda or miniconda
+
+- activate python env
+
+  ```sh
+  conda activate py38
+  ```
+
+- navigate to the `warp-ctc\pytorch_binding` folder
+
+- run command
+
+  ```sh
+  python setup.py install
+  ```
+
+- if everything is OK, copy `warpctc.dll` to your python env's root folder, for example: `Miniconda3\envs\py38`, so python can find and load it
+
+### Test
+
+- navigate to somewhere except the `warpctc\pytorch_binding` folder, otherwise you'll get errors like `_warp_ctc module not found`
+
+- start a python cli and inputs
+
+  ```sh
+  import warpctc_pytorch
+  ```
+
+
+
+> My ENV for your reference:
+>
+> - windows 10 (19041.572)
+> - vs 2019
+> - miniconda (py38)
+> - cuda 11.0
+
+
+
+Note: the modification is based on https://github.com/hzli-ucas/warp-ctc#specific-modifications
+
+---
+
 # PyTorch bindings for Warp-ctc
 
 [![Build Status](https://travis-ci.org/SeanNaren/warp-ctc.svg?branch=pytorch_bindings)](https://travis-ci.org/SeanNaren/warp-ctc)
