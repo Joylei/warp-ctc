@@ -8,18 +8,22 @@ import torch
 
 extra_compile_args = ['-std=c++14', '-fPIC']
 warp_ctc_path = "../build"
-
+lib_name = "libwarpctc"
 if platform.system() == 'Darwin':
     lib_ext = ".dylib"
+if platform.system() == 'Windows':
+    lib_ext = ".dll"
+    lib_name = "warpctc"
 else:
     lib_ext = ".so"
 
+lib_name += lib_ext
 if "WARP_CTC_PATH" in os.environ:
     warp_ctc_path = os.environ["WARP_CTC_PATH"]
-if not os.path.exists(os.path.join(warp_ctc_path, "libwarpctc" + lib_ext)):
-    print(("Could not find libwarpctc.so in {}.\n"
+if not os.path.exists(os.path.join(warp_ctc_path, lib_name)):
+    print(("Could not find {0} in {1}.\n"
            "Build warp-ctc and set WARP_CTC_PATH to the location of"
-           " libwarpctc.so (default is '../build')").format(warp_ctc_path))
+           " {0} (default is '../build')").format(lib_name, warp_ctc_path))
     sys.exit(1)
 
 include_dirs = [os.path.realpath('../include')]
